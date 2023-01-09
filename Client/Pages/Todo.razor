@@ -1,0 +1,164 @@
+﻿@page "/todo"
+@using AnnasApp.Models
+
+@*<PageTitle>Vocabulary</PageTitle>*@
+
+<h1>Vocabulary</h1>
+
+<h4>Subjects</h4>
+<p>
+    @*eu, vc, ela, nós, vcs, elas<br>
+    I, you, she/he, we, you, they*@
+
+    eu = I<br>
+    vc = you<br>
+    ela = he<br>
+    nós = we<br>
+    vcs = you<br>
+    elas = they<br>
+</p>
+
+<h4>Verbs</h4>
+<p>
+    @*ver, gostar, comer, amar<br>
+    see, like, eat, love*@
+
+    ver = see<br>
+    gostar = like<br>
+    comer = eat<br>
+    amar = love<br>
+</p>
+
+<h4>Objects</h4>
+<p>
+    @*porca, cachorra, gata, maçã, banana, laranja<br>
+    pig, dog, cat, apple, banana, orange*@
+
+    porca = pig<br>
+    cachorra = dog<br>
+    gata = cat<br>
+    maçã = apple<br>
+    banana = banana<br>
+    laranja = orange<br>
+</p>
+
+<h4>Adjectives</h4>
+<p>
+    @*verde, amarela, rosa, azul, marrom, preta, branca, vermelha, roxa<br>
+    green, yellow, pink, blue, brown, black, white, red, purple*@
+    @*bonita, feia, forte, fraca, alta, baixa, deliciosa, ruim, rápida, lenta, gorda, magra, grande, pequena, engraçada, triste<br>
+    beautiful, ugly, strong, weak, high, low, delicious, bad, fast, slow, fat, thin, big, little, funny, sad*@
+
+    bonita = beautiful<br>
+    feia = ugly<br>
+    forte = strong<br>
+    fraca = weak<br>
+    alta = high<br>
+    baixa = low<br>
+    deliciosa = delicious<br>
+    ruim = bad<br>
+    rápida = fast<br>
+    lenta = slow<br>
+    gorda = fat<br>
+    magra = thin<br>
+    grande = big<br>
+    pequena = little<br>
+    engraçada = funny<br>
+    triste = sad<br>
+</p>
+
+<h4>Pronunciation</h4>
+<p>
+    don't = don<br>
+    TH >> F ~ T<br>
+</p>
+
+<h4>Grammar</h4>
+<p>
+    <strong>she/he</strong><br>
+    -affirmative >> [verb] + s<br>
+    -interrogative >> does<br>
+    -negative >> doesn't<br>
+    @*infinitive verb = to + [verb]<br>*@
+</p>
+
+<h4>to listen</h4>
+<p>
+    do you like banana? does she like banana? doesn't like banana. don't like banana. beautiful, ugly, strong, weak, high, low, delicious, bad, fast, slow, fat, thin, big, little, funny, sad
+</p>
+
+@*it for animals*@
+
+@*question tags*@
+
+@*past/ futuro*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<p>
+    uma, duas, três, quatro, cinco, seis, sete, oito, nove, dez<br>
+    one, two, three, four, five, six, seven, eight, nine, ten
+</p>*@
+
+
+
+
+
+
+
+<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+
+<h1>To-do list</h1>
+
+<p>(@todos.Count(todo => !todo.IsDone)) tasks missing...</p>
+
+<ul>
+    @foreach (var todo in todos)
+    {
+        <li>
+            <input type="checkbox" @bind="todo.IsDone" />
+            @todo.Title
+        </li>
+    }
+</ul>
+
+<input placeholder="Something todo" @bind="newTodo" />
+<button @onclick="AddTodo">Add todo</button>
+
+@code {
+    private IList<TodoItem> todos = new List<TodoItem>();
+    private string? newTodo;
+
+    private void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            todos.Add(new TodoItem { Title = newTodo });
+            newTodo = string.Empty;
+        }
+    }
+}

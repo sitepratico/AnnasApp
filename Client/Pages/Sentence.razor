@@ -1,0 +1,88 @@
+﻿@page "/sentence"
+
+@inject IJSRuntime JS
+
+@code {
+    const int MAX_FUNNY_ICONS = 27;
+}
+
+@*<PageTitle>Sentence creator</PageTitle>*@
+
+@*<h1>Sentence creator</h1>*@
+
+@*<button class="sentence-button" @onclick="go">G&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O</button>*@
+
+<p @onclick="go" class="sentence-sentence">@sentence</p>
+
+@if (!String.IsNullOrEmpty(sentence) && !sentence.Equals("?"))
+{
+    <img @onclick="go" class="sentence-image" src="img/FunnyIcons/@(funnyIcon).png" />
+}
+
+@for (int i = 1; i <= MAX_FUNNY_ICONS; i++)
+{
+    string fi = i < 10 ? $"0{i}" : i.ToString();
+
+    <img class="sentence-image hidden" src="img/FunnyIcons/@(fi).png" />
+}
+
+@code {
+    private string? sentence = "?";
+    private string? funnyIcon = "01";
+
+    enum SentenceType
+    {
+        Affirmation,
+        Negation,
+        Question
+    };
+
+    private void go()
+    {
+        //List<string> sbjs = new List<string>() { "I", "you", "she/he", "we", "you", "they" };
+        List<string> sbjs = new List<string>() { "eu", "você", "ela", "ele", "nós", "vocês", "elas", "eles" };
+        
+        //List<string> vrbs = new List<string>() { "see", "like", "eat", "love" };
+        List<string> vrbs = new List<string>() { "ver", "gostar", "comer", "amar" };
+        
+        //List<string> objs = new List<string>() { "pig", "dog", "cat", "apple", "banana", "orange" };
+        List<string> objs = new List<string>() { "porca", "cachorra", "gata", "maçã", "banana", "laranja" };
+        
+        //List<string> adjs = new List<string>() { "green", "yellow", "pink", "blue", "brown", "black", "white", "red", "purple" };
+        //List<string> adjs = new List<string>() { "verde", "amarela", "rosa", "azul", "marrom", "preta", "branca", "vermelha", "roxa" };
+        List<string> adjs = new List<string>() { "bonita", "feia", "forte", "fraca", "alta", "baixa", "deliciosa", "ruim", "rápida", "lenta", "gorda", "magra", "grande", "pequena", "engraçada", "triste" };
+
+        Random rnd = new Random();
+
+        SentenceType stcType = (SentenceType)rnd.Next(Enum.GetNames(typeof(SentenceType)).Length);
+
+        string sbj = sbjs[rnd.Next(sbjs.Count)];
+        string vrb = vrbs[rnd.Next(vrbs.Count)];
+        string obj = objs[rnd.Next(objs.Count)];
+        string adj = adjs[rnd.Next(adjs.Count)];
+
+        string neg = String.Empty;
+        string qst = String.Empty;
+
+        if (stcType.Equals(SentenceType.Negation)) neg = "não ";
+        if (stcType.Equals(SentenceType.Question)) qst = " ?";
+
+        int qnt = rnd.Next(10) + 1;
+
+        //string[] quants = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
+        string[] quants = { "uma", "duas", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez" };
+
+        string quant = quants[qnt - 1];
+
+        string plural = qnt > 1 ? "s" : String.Empty;
+
+        int intFunnyIcon = rnd.Next(MAX_FUNNY_ICONS) + 1;
+        funnyIcon = intFunnyIcon < 10 ? $"0{intFunnyIcon}" : intFunnyIcon.ToString();
+
+        //sentence = $"{sbj} {neg}{vrb} {quant} {obj}{plural} {adj}{plural}{qst}";
+        sentence = $"{sbj} {neg}{vrb} {obj} {adj}{qst}";
+
+        JS.InvokeVoidAsync("timeOver");
+    }
+}
+

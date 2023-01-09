@@ -59,6 +59,21 @@ a, .btn-link {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
+
+.sentence-sentence {
+    color: #3a0647;
+    font-weight: bold;
+    font-size: 48px;
+    /*background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);*/
+}
+
+.sentence-image {
+    max-width: 100%;
+}
+
+.hidden {
+    display: none;
+}

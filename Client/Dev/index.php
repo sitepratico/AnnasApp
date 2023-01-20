@@ -1,0 +1,1 @@
+<? header("Location: https://purple-meadow-0e101a210.2.azurestaticapps.net") ?>
